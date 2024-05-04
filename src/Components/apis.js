@@ -1,0 +1,1 @@
+export var tz='https://thumbffice.com/api'
