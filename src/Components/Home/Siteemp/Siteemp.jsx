@@ -77,6 +77,9 @@ const Siteemp = ({props}) => {
 
     const [taxes5, settaxes5] = useState('taxes')
     const [circle5, setcircle5] = useState('circle')
+
+    const [taxes6, settaxes6] = useState('taxes')
+    const [circle6, setcircle6] = useState('circle')
     const [is, setis] = useState(0)
 
     var marker=useRef(null)
@@ -209,6 +212,7 @@ const [tocalendar, settocalendar] = useState(false)
                 email: email&&email.toLowerCase(),
                 password: password,
                 langlat:latlang,
+                manageraccess:manageraccess,
 
 
 
@@ -274,6 +278,7 @@ setlatlang('')
                 supersite:supersite,
                 client: client,
                 idno: idno,
+                manageraccess: manageraccess,
                 email:email&&email.toLowerCase(),
               password:password
 
@@ -402,6 +407,11 @@ function setmapxs(){
 
 
 const [amountd, setamountd] = useState(0)
+
+
+const [is6, setis6] = useState(0)
+
+const [manageraccess, setmanageraccess] = useState(false)
     function turnon4() {
         if (is4 === 0) {
 
@@ -433,6 +443,24 @@ setsupermode('true')
             setcircle5('circle')
             settaxes5('taxes')
             setis5(0)
+        }
+
+    }
+
+    function turnon6() {
+        if (is6 === 0) {
+setmanageraccess('true')
+            setcircle6('circle2')
+            settaxes6('taxes2')
+
+            setis6(1)
+        }
+        else {
+
+            setmanageraccess('false')
+            setcircle6('circle')
+            settaxes6('taxes')
+            setis6(0)
         }
 
     }
@@ -698,6 +726,7 @@ setlatlang(val.langlat)
                     setamountd(val.amountd)
                     setemail(val.email)
                     setpassword(val.password)
+
                     if (val.nc === '4') {
                         setnc('4')
 
@@ -760,6 +789,20 @@ setlatlang(val.langlat)
                         settaxes5('taxes')
                         setis5(0)
                     }
+                    if (val.manageraccess&&val.manageraccess==='true') {
+                        setmanageraccess('true')
+                       
+  
+                          setcircle6('circle2')
+                          settaxes6('taxes2')
+                          setis6(1)
+                      }
+                      else {
+                        setmanageraccess('false')
+                          setcircle6('circle')
+                          settaxes6('taxes')
+                          setis6(0)
+                      }
 
                 }
 
@@ -1466,6 +1509,7 @@ var postData={
 
 }
 
+
 updateSiteUserUpdateTravelMiles(postData).then(res => {
 console.log(res)
 var temptravel=selectedtravel
@@ -1975,7 +2019,7 @@ settrvl2(true)
                            </>
                            :<>
                    
-                           <div className="inpex">
+                           <div className="inpex inpexhalf">
                                         <h1>W - 9 s:  </h1>
                                         <div className={taxes} onClick={e => turnon()}>
                                             <div className={circle}>
@@ -1984,7 +2028,7 @@ settrvl2(true)
                                         </div>
 
                                     </div>
-                                    <div className="inpex">
+                                    <div className="inpex inpexhalf">
                                         <h1>W - 4:  </h1>
                                         <div className={taxes2} onClick={e => turnon2()}>
                                             <div className={circle2}>
@@ -1993,6 +2037,16 @@ settrvl2(true)
                                         </div>
 
                                     </div>
+                                    <div className="inpex">
+                                        <h1>Manager access:  </h1>
+                                        <div className={taxes6} onClick={e => turnon6()}>
+                                            <div className={circle6}>
+
+                                            </div>
+                                        </div>
+                                   
+                                    </div>
+
                                     <div className="inpex">
                                         <h1>Daily Pay:  </h1>
                                         <div className={taxes4} onClick={e => turnon4()}>
@@ -2208,6 +2262,13 @@ settrvl2(true)
                     <button className='whitech'>Supervisors</button>:
 
                     <button onClick={e=>setshowusersx('supervisors')}  className='purplech'>Supervisors</button>
+                    }
+                     {
+                     showusers === 'managers'?
+
+                    <button className='whitech'>Managers</button>:
+
+                    <button onClick={e=>setshowusersx('managers')}  className='purplech'>Managers</button>
                     }
                      
                 </div>
@@ -2639,6 +2700,445 @@ settrvl2(true)
                             }
                             {searchval.length === 0 && searchby === 'name'&& data && data.map(val => (
 val.supermode&&val.supermode==='true'&&
+                                <>
+                                    <div className="headertable" onClick={e=>selectthis(val)}>
+                                        <span className='sxx'> <input type="checkbox" checked={ids.search(val._id) >= 0} onClick={e => ids.search(val._id) >= 0 ? setids(ids.replace(val._id + '4sd', '')) : setids(ids + val._id + '4sd')} /> </span>
+
+                                        <h4 style={{ width: "80px" }}>{val.idno}</h4>
+                                        {ids.search(val._id) >= 0 ?
+
+
+                                            <h2 className='blackmark' style={{ marginLeft: '5px' }}>{val.name}</h2>
+                                            :
+
+                                            <h2 style={{ marginLeft: '5px' }}>{val.name}</h2>
+
+                                        }
+                                    
+                                        <h6 ><div className="tinvoice">{val.skill}</div></h6>
+
+                                        <h6 style={{width:250}} >{val.client}</h6>
+                                        <h6>{val.phone&&formatPhoneNumber(val.phone)}</h6>
+                                     
+                                    </div>
+                                </>
+                            ))
+
+                            }
+
+  
+                        </div>
+                    </div>
+                    {!kshow&&data&&data.map(val=>(
+    <div className="cardlx hideondesk" onClick={e=>selectthis2(val)}>
+        <div className="topcardlx">
+        <div className="bcircle birclex">
+        {
+            val.imgurl?
+            <img className='imgur' src={val.imgurl} alt="" />
+            
+            :
+
+            <HiUser className='fabv' />
+        }
+       
+
+        </div>
+        <div className="detailsx">
+            <h1>{val.name?val.name:'No Name'}</h1>
+            <p>
+                {val.skill&&val.skill.substring(0,20)}
+            </p>
+      
+        </div>
+
+        </div>
+    </div>
+))
+
+}
+
+    <div className="comdet2 hideonmobile">
+    {currone?
+      <>  <div className="penh" onClick={e=>updateuser()
+        }>
+            <FaPencilAlt className='fadd' />
+
+        </div>
+        <h1>User info</h1>
+   
+        <div className="divx divcf">
+       <div className="bcircle">
+     <div className="iconcha">
+     <AiFillCamera className='iconchai' />
+     <input type="file" onChange={e=>fileupload(e.target.files[0])} />
+     </div>
+        {
+            currone.imgurl2?
+            <img className='imgur' src={currone.imgurl2} alt="" />
+            
+            : currone.imgurl?
+            <img className='imgur' src={currone.imgurl} alt="" />
+            
+            :
+
+            <HiUser className='fabv' />
+        }
+
+        </div>
+    <div className="divxinfo">
+    <p>{currone.name}</p>
+        <p className='sklx'>{currone.skill}</p>
+
+{
+
+}
+{
+    !loading?
+    <p className='sklo' onClick={e=>showtravel()}>Travel logs</p>
+    :
+    <Loader />
+}
+    
+    </div>
+       </div>
+    
+       <div className="divx2">
+        <div className="prt prt2">
+<h1>{currone.payrate} $</h1>
+<p>Pay rate</p>
+        </div>
+        <div className="prt prt2">
+<h1>{currone.cpr} $</h1>
+<p>Custom Pay rate</p>
+        </div>
+        <div className="prt">
+        <h1>{currone.otpayrate} $</h1>
+<p>OT Pay rate</p>
+        </div>
+       </div>
+       <div className="cinfo cinfocol"  >
+     <div className="mdl2">
+     <BsBuilding className='mdl' />
+     </div>
+       <div className="cinfo">
+       <h1>
+    Company </h1>
+        <p>{currone.client}</p>
+       </div>
+    
+       </div>
+       <div className="cinfo cinfocol"  >
+     <div className="mdl2">
+     <FaPhone className='mdl' />
+     </div>
+       <div className="cinfo">
+       <h1>
+    Phone </h1>
+        <p>{currone.phone&&formatPhoneNumber(currone.phone)}</p>
+       </div>
+    
+       </div>
+    
+       <div className="cinfo cinfocol"  >
+     <div className="mdl2">
+     <HiOutlineMail className='mdl' />
+     </div>
+       <div className="cinfo">
+       <h1>
+    Email </h1>
+        <p>{currone.email}</p>
+       </div>
+    
+       </div>
+     
+       <div className="cinfo cinfocol"  >
+     <div className="mdl2">
+     <IoLockClosedOutline className='mdl' />
+     </div>
+       <div className="cinfo">
+       <h1>
+    Password </h1>
+        <p>{currone.password}</p>
+       </div>
+    
+       </div>
+    
+       <div className="badge">
+        {currone.status}
+       </div>
+       </>
+       :
+       <div className="divx">
+       
+        <p>Select Company to view</p>
+       </div> }
+
+    </div>
+    {
+        kshow&&
+
+    <div className="comdet2 ">
+    {currone?
+      <>  <div className="penh botonm" onClick={e=>setkshow(false)
+        }>
+            <IoClose className='fadd' />
+
+        </div>
+        <h1>User info</h1>
+   
+        <div className="divx">
+       <div className="bcircle">
+        {
+            currone.imgurl?
+            <img className='imgur' src={currone.imgurl} alt="" />
+            
+            :
+
+            <HiUser className='fabv' />
+        }
+
+        </div>
+        <p>{currone.name}</p>
+        <p className='skl'>{currone.skill}</p>
+       </div>
+       <div className="divx2">
+        <div className="prt prt2">
+<h1>{currone.payrate} $</h1>
+<p>Pay rate</p>
+        </div>
+        <div className="prt">
+        <h1>{currone.otpayrate} $</h1>
+<p>OT Pay rate</p>
+        </div>
+       </div>
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Company </h1>
+        <p>{currone.client}</p>
+       </div>
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Phone</h1>
+        <p>{currone.phone}</p>
+       </div>
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Email </h1>
+        <p>{currone.email}</p>
+       </div>
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Password </h1>
+        <p>{currone.password}</p>
+       </div>
+       <div className="badge">
+        {currone.status}
+       </div>
+       </>
+       :
+       <div className="divx">
+       
+        <p>Select Company to view</p>
+       </div> }
+
+    </div>
+    }
+</div>
+
+              {/*     <div className="newst">
+                     <div className="tablerow   tablef">
+                        <div className="subtable">
+                            <div className="headertable clop">
+                                <span className='sxx'><input type="checkbox" checked={o === 1} onClick={e => fillall()} /> </span>
+
+                                <h4 style={{ width: "40px" }}>No.</h4>
+
+
+                                <h2 style={{ paddingLeft: '5px' }}>Name</h2>
+
+                                <h2 style={{ paddingLeft: '5px' }}>Email</h2>
+                                <h2 style={{ paddingLeft: '5px' }}>Password</h2>
+                                <h1>Project</h1>
+
+                                <h6>Adress</h6>
+
+                                <h6>Phone</h6>
+                                <h3 style={{ width: "70px" }}>Status</h3>
+
+
+                            </div>
+                            {supervisors && supervisors.map((val, index) => (
+                                <>
+                                    <div className="headertable" onClick={e=>setcurrone2(val)}>
+                                        <span className='sxx'> <input type="checkbox" checked={ids.search(val._id) >= 0} onClick={e => ids.search(val._id) >= 0 ? setids(ids.replace(val._id + '4sd', '')) : setids(ids + val._id + '4sd')} /> </span>
+
+                                        <h4 style={{ width: "40px" }}>{index + 1}</h4>
+                                        <h2 style={{ marginLeft: '5px' }}>{val.name}</h2>
+
+                                        <h2 style={{ marginLeft: '5px' }}>{val.email}</h2>
+
+                                        <h2 style={{ marginLeft: '5px' }}>{val.pass}</h2>
+                                        <h1> {val.sitename}</h1>
+
+                                        <h6 >{val.address}</h6>
+
+                                        <h6>{val.phone}</h6>
+                                        <h3 style={{ width: "70px" }} >{val.status}</h3>
+
+
+
+                                    </div>
+                                </>
+                            ))
+
+                            }
+                        </div>
+                    </div>
+
+
+
+
+<div className="comdet">
+{currone2?
+      <>  <div className="penh" onClick={e=>updateuser()
+        }>
+            <FaPencilAlt className='fadd' />
+
+        </div>
+        <h1>User info</h1>
+   
+        <div className="divx">
+       <div className="bcircle">
+        {
+            currone2.imgurl?
+            <img className='imgur' src={currone2.imgurl} alt="" />
+            
+            :
+
+            <HiUser className='fabv' />
+        }
+
+        </div>
+        <p>{currone2.name}</p>
+        <p className='skl'>{currone2.skill}</p>
+       </div>
+  
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Project </h1>
+        <p>{currone2.sitename}</p>
+       </div>
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Phone</h1>
+        <p>{currone2.phone}</p>
+       </div>
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Email </h1>
+        <p>{currone2.email}</p>
+       </div>
+       <div className="cinfo">
+        <h1>
+            <MdLocationOn className='mdl' />Password </h1>
+        <p>{currone2.password}</p>
+       </div>
+       <div className="badge">
+        {currone2.status}
+       </div>
+       </>
+       :
+       <div className="divx">
+       
+        <p>Select Company to view</p>
+       </div> }
+</div>
+                   </div>
+    */} 
+    </>}
+    {showusers === 'managers' &&
+<>
+<div className="newst">
+
+<div className="tablerow hideonmobile table2f " >
+                           <div className="headertable clop sticky">
+                                <span className='sxx'><input type="checkbox" checked={o === 1} onClick={e => fillall()} /> </span>
+
+                                <h4 style={{ width: "80px" }}>No.</h4>
+
+
+                                <h2 style={{ paddingLeft: '5px' }}>Staff</h2>
+                       
+
+                                <h6>Skill</h6>
+
+                                <h6 style={{width:250}} >Company</h6>
+                                <h6>Phone</h6>
+
+
+                            </div>
+                        <div className="subtable">
+                         
+                            {searchval.length > 0 && searchby === 'name' && data && data.map(val => (
+                                val.name.toLowerCase().search(searchval.toLowerCase()) >= 0 &&
+                                <>
+                                    <div className="headertable" onClick={e=>selectthis(val)}>
+                                        <span className='sxx'> <input type="checkbox" checked={ids.search(val._id) >= 0} onClick={e => ids.search(val._id) >= 0 ? setids(ids.replace(val._id + '4sd', '')) : setids(ids + val._id + '4sd')} /> </span>
+
+                                        <h4 style={{ width: "80px" }}>{val.idno}</h4>
+                                        {ids.search(val._id) >= 0 ?
+
+
+                                            <h2 className='blackmark' style={{ marginLeft: '5px' }}>{val.name}</h2>
+                                            :
+
+                                            <h2 style={{ marginLeft: '5px' }}>{val.name}</h2>
+
+                                        }
+                                  
+                                        <h6 ><div className="tinvoice">{val.skill}</div></h6>
+
+                                        <h6 style={{width:250}} >{val.client}</h6>
+                                        <h6>{val.phone&&formatPhoneNumber(val.phone)}</h6>
+                                    
+
+                                    </div>
+                                </>
+                            ))
+
+                            }
+                            {currcom && searchby === 'company' && data && data.map(val => (
+                                val.manageraccess&&val.manageraccess==='true'&&
+                                val.clientid.toLowerCase().search(currcom._id.toLowerCase()) >= 0 &&
+                                <>
+                                    <div className="headertable" onClick={e=>selectthis(val)}>
+                                        <span className='sxx'> <input type="checkbox" checked={ids.search(val._id) >= 0} onClick={e => ids.search(val._id) >= 0 ? setids(ids.replace(val._id + '4sd', '')) : setids(ids + val._id + '4sd')} /> </span>
+
+                                        <h4 style={{ width: "80px" }}>{val.idno}</h4>
+                                        {ids.search(val._id) >= 0 ?
+
+
+                                            <h2 className='blackmark' style={{ marginLeft: '5px' }}>{val.name}</h2>
+                                            :
+
+                                            <h2 style={{ marginLeft: '5px' }}>{val.name}</h2>
+
+                                        }
+                                     
+                                        <h6 ><div className="tinvoice">{val.skill}</div></h6>
+
+                                        <h6 style={{width:250}} >{val.client}</h6>
+                                        <h6>{val.phone&&formatPhoneNumber(val.phone)}</h6>
+
+
+                                    </div>
+                                </>
+                            ))
+
+                            }
+                            {searchval.length === 0 && searchby === 'name'&& data && data.map(val => (
+val.manageraccess&&val.manageraccess==='true'&&
                                 <>
                                     <div className="headertable" onClick={e=>selectthis(val)}>
                                         <span className='sxx'> <input type="checkbox" checked={ids.search(val._id) >= 0} onClick={e => ids.search(val._id) >= 0 ? setids(ids.replace(val._id + '4sd', '')) : setids(ids + val._id + '4sd')} /> </span>

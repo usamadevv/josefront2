@@ -60,7 +60,13 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    margin: 20px;
+    margin: 10px;
+    border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+    border: 1px solid rgb(227, 227, 227);
 }
 
 .prodi {}
@@ -439,8 +445,46 @@
 .build2>img {
     width: 20px;
 }
+.filterbar{
+    align-items: center;
+}
+.userr>p{
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    border-radius: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #5D69D4;
+  text-align: center;
+  padding-left: 2px;
+    padding-top: 1px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+}
+.filteroption1>h3{
+    color: gray;
+}
+.userr{
+    position: relative;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    border: 2px dotted #757bb6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.userr>img{
+    width: 30px;
+    height: 30px;
 
+}
 .build>img {
     width: 30px;
     margin-left: -4px;
@@ -496,26 +540,169 @@
     font-weight: 500;
     color: rgb(106, 105, 110);
 }
+.react-calendar__tile--now{
+    color: #020B60!important;
+}
+.inpexhalf{
+    width: 40%!important;
+}
 
 .viewsnap {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(0, 0, 0, 0.4);
+    background-color: rgb(51, 51, 51);
     width: 100%;
     position: absolute;
     z-index: 99999;
     height: 100vh;
 }
+.prods{
+    width: 180px;
+    height: 4px;
+    border-radius: 10px;
+    background-color: rgb(227, 227, 227);
+    margin-top: 0px;
+}
+.viewsnap>.subview>img{
+    width: 900px!important;
+    height: 500px;
+    border-radius: 0px;
+    object-fit: contain;
+}
+.viewsnap>.subview{
+    padding-top: 20px;
 
+    flex-direction: column!important;
+    width: 100%!important;
+    height: 100%!important;
+    background-color: transparent!important;
+}
+.prodssub{
+    width: 70%;
+    height: 4px;
+    border-radius: 10px;
+    background-color: rgb(18, 212, 135);
+
+}
 .itemsnap>h3 {
 
     margin-top: 4px;
     font-family: 'Inter', sans-serif !important;
-    font-size: 13px;
-    font-style: italic;
+    font-size: 12px;
     font-weight: 500;
-    color: rgb(156, 156, 156);
+    color: rgb(87, 87, 87);
+}
+.itemsnap>h4>p{
+    color: #0ba488;
+}
+.filterbar{
+    width: 90%;
+    display: flex;
+
+
+}
+.itemlist{
+    position: absolute;
+    top: 38px;
+    background-color: white;
+
+}
+
+.itemlist2{
+    left: 0px;
+    position: absolute;
+    width: max-content;
+    min-width: 300px;
+    top: 38px;
+    background-color: white;
+
+}
+.drpdown>img{
+    position: absolute;
+    right: 5px;
+    width: 30px;
+}
+.drpdown{
+    cursor: pointer;
+}
+.filteroption1{
+    margin-right: 20px;
+}
+.itemlist>p{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    margin-top: 5px;
+    color: gray;
+   font-weight: 500;
+   font-size: 14px; 
+}
+.itemlist{
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgb(199, 199, 199);
+    left: 0px;
+    overflow: hidden;
+}
+.itemlist>input{
+    width: 90%;
+    height: 35px;
+    border-radius: 3px;
+    padding-left: 5px;
+    margin-top: 10px;
+    color: gray;
+    border: 1px solid rgb(199, 199, 199);
+
+}
+.itemlist{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+.drpdown{
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding-left: 10px;
+    font-size: 14px;
+    color: gray;
+    border: 1px solid rgb(218, 218, 218);
+}
+.filteroption1>h3{
+
+
+    font-size: 14px;
+
+}
+.filterbar{
+    margin-top: 20px;
+}
+.drpdown{
+    position: relative;
+
+}
+.filteroption1{
+    
+
+    
+    display: flex;
+    flex-direction: column;
+
+}
+.itemsnap>h4 {
+
+    display:flex;
+
+    margin-top: 10px;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(35, 35, 35);
 }
 
 .itemsnap>p {
@@ -526,11 +713,17 @@
     font-weight: 500;
     color: rgb(98, 95, 95);
 }
-
+.itemsnap>h5{
+    font-size: 14px;
+}
+.itemsnap>h6{
+    font-size: 12px;
+}
 .itemsnap>img {
-    width: 150px;
+    width: 180px;
 
-    height: 100px;
+    height: 130px;
+    
     border-radius: 10px;
 }
 

@@ -510,7 +510,16 @@ function logout(){
             Let's view insights on jobsites
           </p>
          </>   :
-
+   i===6?
+   <>
+   <h1 className='headering' >
+      Snapshots
+    </h1>
+    <p className='headeringpara' >
+      
+    All users snapshots
+    </p>
+   </>:
             <></> 
             }
             </div>

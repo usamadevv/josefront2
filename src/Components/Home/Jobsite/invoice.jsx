@@ -629,9 +629,6 @@ const [boxprojects, setboxprojects] = useState('boxprojects2')
     const [data2, setdata2] = useState([])
     const [mkup, setmkup] = useState(0)
     const [currid, setcurrid] = useState('')
-    const [address2, setaddress2] = useState('')
-    const [pno2, setpno2] = useState('')
-    const [pname2, setpname2] = useState('')
 
 
     const [filter, setfilter] = useState('jobsite')
@@ -790,8 +787,7 @@ console.log(rees)
                 let day = date.getDate();
                 let month = date.getMonth() + 1;
                 let year = date.getFullYear();
-
-
+                
                 let day2 = date2.getDate();
                 let month2 = date2.getMonth() + 1;
                 let year2 = date2.getFullYear();
@@ -845,6 +841,8 @@ console.log(rees)
 
 
                         val.user.length > 0 && val.user.forEach((element, indx) => {
+                            const user = empdata.find(user => user._id === element.userid);
+
                             console.log(val)
                             if (valx === 2) {
 
@@ -858,10 +856,10 @@ console.log(rees)
                                 Taxes: element.taxes,
                                 Client: val.clientname,
                                 Date: new Date(new Date().setDate(new Date().getDate() + ((clients.find((client) => client._id === val.clientid) || {}).weekend- (new Date().getDay() === 0 ? 7 : new Date().getDay()) + 1))).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\//g, '-'),
-                                Employee: element.name,
-                                skill: element.skill,
+                                Employee: user.name,
+                                skill: user.skill,
                                 Hrs: (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Hrs)||0,
-                                Payrate: valx === 1 ? Number(element.payrate).toFixed(2) : Number(Number(element.payrate) + Number(element.payrate) * Number(val.markup) / 100).toFixed(2) ,
+                                Payrate: valx === 1 ? Number(user.payrate).toFixed(2) : Number(Number(user.payrate) + Number(user.payrate) * Number(val.markup) / 100).toFixed(2) ,
                                 siteid:val._id,
                                 perdiemmiles:Number(val.perdiemmiles?val.perdiemmiles:0),
                                 onperdiemmiles:Number(val.onperdiemmiles?val.onperdiemmiles:0),
@@ -882,11 +880,11 @@ console.log(rees)
 
 
                                 Ot_Hrs: (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0,
-                                OT_Pay_rate: Number(element.otpayrate) + Number(element.otpayrate) * Number(val.markup) / 100,
-                                nc_4: element.nc === 'no' ? '-' : ((Number(element.payrate) * 0) + (0 * Number(element.otpayrate))) * 4 / 100,
-                                total: ((Number(element.payrate)+Number(element.payrate) * Number(val.markup) / 100) * Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Hrs)||0)) + (Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0) *( Number(element.otpayrate)+Number(element.payrate) * Number(val.markup) / 100)),
+                                OT_Pay_rate: Number(user.otpayrate) + Number(user.otpayrate) * Number(val.markup) / 100,
+                                nc_4: element.nc === 'no' ? '-' : ((Number(user.payrate) * 0) + (0 * Number(user.otpayrate))) * 4 / 100,
+                                total: ((Number(user.payrate)+Number(user.payrate) * Number(val.markup) / 100) * Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Hrs)||0)) + (Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0) *( Number(user.otpayrate)+Number(user.payrate) * Number(val.markup) / 100)),
                                 deductions: 0,
-                                net: ((Number(element.payrate)+Number(element.payrate) * Number(val.markup) / 100) * Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Hrs)||0)) + (Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0) * (Number(element.otpayrate)+Number(element.payrate) * Number(val.markup) / 100)) - 0 - (element.nc === 'no' ? 0 : ((Number(element.payrate) * 0) + (0 * parseInt(element.otpayrate))) * 4 / 100)
+                                net: ((Number(user.payrate)+Number(user.payrate) * Number(val.markup) / 100) * Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Hrs)||0)) + (Number((allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0) * (Number(user.otpayrate)+Number(user.payrate) * Number(val.markup) / 100)) - 0 - (element.nc === 'no' ? 0 : ((Number(user.payrate) * 0) + (0 * parseInt(user.otpayrate))) * 4 / 100)
 
 
 
@@ -950,6 +948,8 @@ console.log(rees)
 
 
                         val.user.length > 0 && val.user.forEach((element, indx) => {
+                            const user = empdata.find(user => user._id === element.userid);
+
                             console.log(val)
                             if (valx === 2) {
 
@@ -962,10 +962,10 @@ console.log(rees)
                                 Taxes: element.taxes,
                                 Client: val.clientname,
                                 Date: new Date(new Date().setDate(new Date().getDate() + ((clients.find((client) => client._id === val.clientid) || {}).weekend- (new Date().getDay() === 0 ? 7 : new Date().getDay()) + 1))).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\//g, '-'),
-                                Employee: element.name,
-                                skill: element.skill,
+                                Employee: user.name,
+                                skill: user.skill,
                                 Hrs: (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Hrs)||0,
-                                Payrate:  valx === 1 ? Number(element.payrate).toFixed(2) : Number(Number(element.payrate) + Number(element.payrate) * Number(val.markup) / 100).toFixed(2),
+                                Payrate:  valx === 1 ? Number(user.payrate).toFixed(2) : Number(Number(element.user) + Number(user.payrate) * Number(val.markup) / 100).toFixed(2),
                                 siteid:val._id,
                                 perdiemmiles:Number(val.perdiemmiles?val.perdiemmiles:0),
                                 onperdiemmiles:Number(val.onperdiemmiles?val.onperdiemmiles:0),
@@ -983,28 +983,28 @@ console.log(rees)
 
 
                                 Ot_Hrs: (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0,
-                                OT_Pay_rate: Number( element.otpayrate) + Number(element.otpayrate) * Number(val.markup) / 100,
-                                nc_4: element.nc === 'no' ? '-' : ((Number(element.payrate) * 0) + (0 * Number(element.otpayrate))) * 4 / 100,
+                                OT_Pay_rate: Number( user.otpayrate) + Number(user.otpayrate) * Number(val.markup) / 100,
+                                nc_4: element.nc === 'no' ? '-' : ((Number(user.payrate) * 0) + (0 * Number(user.otpayrate))) * 4 / 100,
                                 total:
                                 (
-                                  (Number(element.payratetype === 'custom' ? element.cpr : element.payrate) *
+                                  (Number(element.payratetype === 'custom' ? user.cpr : user.payrate) *
                                     (allhours.find(obj => obj.userid === element.userid && obj.siteid === val._id)?.Hrs || 0))
                                 ) +
                                 (
                                   (
                                     (allhours.find(obj => obj.userid === element.userid && obj.siteid === val._id)?.Ot_Hrs || 0) *
-                                    Number(element.otpayrate)
+                                    Number(user.otpayrate)
                                   ) || 0 // Handle NaN cases
                                 ),                                deductions: 0,
                                 net:
   (
-    (Number(element.payratetype === 'custom' ? element.cpr : element.payrate) *
+    (Number(element.payratetype === 'custom' ? user.cpr : user.payrate) *
       (allhours.find(obj => obj.userid === element.userid && obj.siteid === val._id)?.Hrs || 0))
   ) +
   (
     (
       (allhours.find(obj => obj.userid === element.userid && obj.siteid === val._id)?.Ot_Hrs || 0) *
-      Number(element.otpayrate)
+      Number(user.otpayrate)
     ) || 0 // Handle NaN cases
   ) -
   0 - // This is always subtracting 0
@@ -1012,8 +1012,8 @@ console.log(rees)
     element.nc === 'no'
       ? 0
       : (
-          (Number(element.payrate) * 0) +
-          (0 * parseInt(element.otpayrate))
+          (Number(user.payrate) * 0) +
+          (0 * parseInt(user.otpayrate))
         ) * 4 / 100
   )
 
@@ -1123,6 +1123,8 @@ console.log(rees)
 
 
                         val.user.length > 0 && val.user.forEach((element,inex) => {
+                            const user = empdata.find(user => user._id === element.userid);
+
                             console.log(val)
                             if (valx === 2) {
 
@@ -1135,16 +1137,16 @@ console.log(rees)
                                 Taxes: element.taxes,
                                 Client: val.clientname,
                                 Date: new Date(new Date().setDate(new Date().getDate() + ((clients.find((client) => client._id === val.clientid) || {}).weekend- (new Date().getDay() === 0 ? 7 : new Date().getDay()) + 1))).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\//g, '-'),
-                                Employee: element.name,
-                                skill: element.skill,
+                                Employee: user.name,
+                                skill: user.skill,
                                 userid: element.userid,
                                 siteid:val._id,
                                 perdiemmiles:Number(val.perdiemmiles?val.perdiemmiles:0),
                                 onperdiemmiles:Number(val.onperdiemmiles?val.onperdiemmiles:0),
-                                cpr:element.cpr,
+                                cpr:user.cpr,
                                 cprapply:element.payratetype==='custom'?'yes':'no',
                                 Hrs: 0,
-                                Payrate: valx === 1 ? Number(element.payrate).toFixed(2) : Number(Number(element.payrate) + Number(element.payrate) * Number(val.markup) / 100).toFixed(2) ,
+                                Payrate: valx === 1 ? Number(user.payrate).toFixed(2) : Number(Number(user.payrate) + Number(user.payrate) * Number(val.markup) / 100).toFixed(2) ,
 
                                 distance: parseInt(element.distance),
                                 days: 0,
@@ -1156,11 +1158,11 @@ console.log(rees)
                                perdiem:val.perdiemamnt,   onperdiem:val.onperdiemamnt,
 
                                 Ot_Hrs: 0,
-                                OT_Pay_rate: Number(element.otpayrate) + Number(element.otpayrate) * Number(val.markup) / 100,
-                                nc_4: element.nc === 'no' ? '-' : ((Number(element.payrate) * 0) + (0 * Number(element.otpayrate))) * 4 / 100,
-                                total: (Number(element.payrate) * 0) + (0 * Number(element.otpayrate)),
+                                OT_Pay_rate: Number(user.otpayrate) + Number(user.otpayrate) * Number(val.markup) / 100,
+                                nc_4: element.nc === 'no' ? '-' : ((Number(user.payrate) * 0) + (0 * Number(user.otpayrate))) * 4 / 100,
+                                total: (Number(user.payrate) * 0) + (0 * Number(user.otpayrate)),
                                 deductions: 0,
-                                net: (Number(element.payrate) * 0) + (0 * Number(element.otpayrate)) - 0 - (element.nc === 'no' ? 0 : ((Number(element.payrate) * 0) + (0 * parseInt(element.otpayrate))) * 4 / 100)
+                                net: (Number(user.payrate) * 0) + (0 * Number(user.otpayrate)) - 0 - (element.nc === 'no' ? 0 : ((Number(user.payrate) * 0) + (0 * parseInt(user.otpayrate))) * 4 / 100)
 
 
 
@@ -1232,6 +1234,8 @@ console.log(rees)
                         setinname(val.sitename)
                         setincname(val.clientname)
                         val.user.length > 0 && val.user.forEach((element,inex) => {
+                            const user = empdata.find(user => user._id === element.userid);
+
                             console.log(val)
 
                             setcurrid(val.clientid)
@@ -1242,24 +1246,24 @@ console.log(rees)
                                 Taxes: element.taxes,
                                 Client: val.clientname,
                                 Date: new Date(new Date().setDate(new Date().getDate() + ((clients.find((client) => client._id === val.clientid) || {}).weekend- (new Date().getDay() === 0 ? 7 : new Date().getDay()) + 1))).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\//g, '-'),
-                                Employee: element.name,
+                                Employee: user.name,
                                 Hrs: 0,
                                 days: 0,
                                 distance: parseInt(element.distance),
-                                cpr:element.cpr,
+                                cpr:user.cpr,
                                 cprapply:'yes',
                                 userid: element.userid,
                                 siteid:val._id,
                                 perdiemmiles:Number(val.perdiemmiles?val.perdiemmiles:0),
                                 onperdiemmiles:Number(val.onperdiemmiles?val.onperdiemmiles:0),
                                 perdiem:val.perdiemamnt,   onperdiem:val.onperdiemamnt,
-                                Payrate: valx === 1 ? parseInt(element.payrate) : parseInt(element.payrate),
+                                Payrate: valx === 1 ? parseInt(user.payrate) : parseInt(user.payrate),
                                 Ot_Hrs: 0,
-                                OT_Pay_rate: parseInt(element.otpayrate),
-                                nc_4: element.nc === 'no' ? '-' : ((parseInt(element.payrate) * 0) + (0 * parseInt(element.otpayrate))) * 4 / 100,
-                                total: (parseInt(element.payrate) * 0) + (0 * parseInt(element.otpayrate)),
+                                OT_Pay_rate: parseInt(user.otpayrate),
+                                nc_4: element.nc === 'no' ? '-' : ((parseInt(user.payrate) * 0) + (0 * parseInt(user.otpayrate))) * 4 / 100,
+                                total: (parseInt(user.payrate) * 0) + (0 * parseInt(user.otpayrate)),
                                 deductions: 0,
-                                net: (parseInt(element.payrate) * 0) + (0 * parseInt(element.otpayrate)) - 0 - (element.nc === 'no' ? 0 : ((parseInt(element.payrate) * 0) + (0 * parseInt(element.otpayrate))) * 4 / 100)
+                                net: (parseInt(user.payrate) * 0) + (0 * parseInt(user.otpayrate)) - 0 - (element.nc === 'no' ? 0 : ((parseInt(user.payrate) * 0) + (0 * parseInt(user.otpayrate))) * 4 / 100)
 
 
                                 ,
@@ -2879,6 +2883,7 @@ var ohrs=hrs>40?hrs-40:0
      <div className={`${aduserl} nobg`}>
      <div className="mainpage1"  >
          <ReactToPrint
+         onBeforeGetContent={e=>showdepartments(false)}
 
              trigger={() => <button className='exportbtn'>
                 <img src={pdf} className='pdficon' alt="" />
@@ -3962,14 +3967,20 @@ marginRight:5,
 fontSize:20,
 marginRight:5,
  }} />
-       Invoice
+       Invoice preview
         </div>
-        <div className="listviewsub"  onClick={e=>savepayroll(preparedata)}  >   
+       
+       
+       {/**
+        *  <div className="listviewsub"  onClick={e=>savepayroll(preparedata)}  >   
        <MdOutlinePayment style={{
 fontSize:20,
 marginRight:5,
  }} /> Send to payroll
         </div>
+        */
+
+       }
 </div>
 }
 

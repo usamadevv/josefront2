@@ -10,7 +10,7 @@ import {BsFolder} from 'react-icons/bs'
 
 import { GiEnergyArrow } from 'react-icons/gi'
 import { RiLightbulbFlashLine, RiTimerFlashFill } from 'react-icons/ri'
-import { BiTime } from 'react-icons/bi'
+import { BiArrowBack, BiTime } from 'react-icons/bi'
 import { MdOutlinePayment, MdOutlineSave, MdSnooze } from 'react-icons/md'
 import { AiOutlineReload } from 'react-icons/ai'
 import axios from 'axios'
@@ -1647,11 +1647,15 @@ function selectthis(val) {
 
 }
 const [payrolldata, setpayrolldata] = useState([])
+const [payrollclassifieddata, setpayrollclassifieddata] = useState([])
+
 
 useEffect(() => {
     getAactiveSiteusers().then(res => {
         console.log(res)
         setempdata(res.Siteuserd)
+
+
     })
 
     getAllJobsites().then(res => {
@@ -1660,6 +1664,33 @@ useEffect(() => {
         getAllPayroll().then(rese => {
             console.log(rese)
             setpayrolldata(rese.Payroll)
+            var classifiedData=[]
+
+            rese.Payroll.forEach(element => {
+                 var st=classifiedData.findIndex(ele=>ele.companyid===element.companyid&&ele.date===element.date)
+if(
+   st>=0
+){
+    classifiedData[st].payrolldata.push(element)
+}
+else{
+var data={
+    companyid:element.companyid,
+    date:element.date,
+    payrolldata:[element]
+}
+classifiedData.push(data)
+
+}
+
+
+
+                
+            });
+            setpayrollclassifieddata(classifiedData)
+console.log(classifiedData)
+
+
       
 
         })
@@ -2245,11 +2276,29 @@ function applyperdiem() {
 
 
 }
+
+function openversions(val){
+  // Create a shallow copy of val
+var ty = { ...val };
+
+// Create a shallow copy of val.payrolldata and reverse it
+ty.payrolldata = [...val.payrolldata].reverse();
+
+// Update the versions
+setversions(ty);
+setmainfiles(false)
+}
+
+
 const [zpi, setzpi] = useState('Durham NC 27705')
 const [mail, setmail] = useState('admin@cfl-solution.com')
 const [aduserx, setaduserx] = useState('adduser2')
 const [perdiemamnt, setperdiemamnt] = useState(0)
 const [perdiemmil, setperdiemmil] = useState(0)
+
+const [versions, setversions] = useState(null)
+
+const [mainfiles, setmainfiles] = useState(true)
 
 const [onperdiemamnt, setonperdiemamnt] = useState(34)
 const [onperdiemmil, setonperdiemmil] = useState(0)
@@ -2298,6 +2347,7 @@ function opm() {
       };
     function setselectedx(val)
     {
+        setmainfiles(true)
         setcomp(val)
         setshowfiles(false)
         setselected(val._id)
@@ -2566,6 +2616,12 @@ val._id===selected? <div className="rwlis2" onClick={e=>setselectedx(val)}>
 }
 </div>
 {!showfiles?
+
+
+
+<>
+{
+mainfiles?
 <div className="files2">
 <div className="btn11">
 
@@ -2578,49 +2634,23 @@ val._id===selected? <div className="rwlis2" onClick={e=>setselectedx(val)}>
 width:'100%'            
         }} >{valx.name}</h1>
        } 
-        {payrolldata&&payrolldata.map(val=>(
+        {payrollclassifieddata&&payrollclassifieddata.map(val=>(
             val.companyid===selected&&
             val.date && valx.month === Number(val.date.split('/')[0])&&
-<div className='divfile' onClick={e=>openfiles(val)}>
+<div className='divfile' onClick={e=>openversions(val)}>
 
 
 <button className='statusbt'
 style={{
-color:val.status==='Paid'?'#6787c8':val.status==='Pending'?'#c8a967':'#67c8b7'  ,
+color:'#6787c8' ,
 
-backgroundColor:val.status==='Paid'?'#eef7fb':val.status==='Pending'?'#fbf8ee':'#eefbf9'  ,
+backgroundColor:'#eef7fb' ,
 }}
 >
 
-    {val.status}
+    {val.payrolldata.length} files
     </button>
 
-    <button onClick={e=>e.stopPropagation()} className='dots'>
-        
-        <img onClick={e => showlistviewx?setshowlistviewx2(false,val._id):setshowlistviewx2(true,val._id)}  src={dots} alt="" />
-        {showlistviewx&&menuactiveon===val._id&&
-    <div className="listview listview2" onClick={(e) => e.stopPropagation()}>
-    <div className="listviewsub"
-    onClick={e => updatestatus2('Approved',val)}
-    >
- <MdOutlineSave style={{
-fontSize:20,
-marginRight:5,
- }}/> Approve
-    </div>
-    <div className="listviewsub"
-        onClick={e => updatestatus2('Paid',val)}
-    >
-        <FaFilePdf style={{
-fontSize:20,
-marginRight:5,
- }} />
-       Mark as paid
-        </div>
-      
-</div>
-}
-        </button>
 <img className='nomargin' src={filep} alt="" />
 <h1>Payroll - {val.date&&val.date}</h1>
 </div>
@@ -2634,7 +2664,41 @@ marginRight:5,
      
      
 
+</div>:
+
+<>
+<div className="files2">
+    <h4 style={{
+        marginBottom:10,
+        fontSize:18,
+        color:'gray',
+        marginLeft:10,
+    }}  > <BiArrowBack onClick={e=>setmainfiles(true)} />  Payroll - {versions.date}</h4>
+{versions&&versions.payrolldata.map((val,index)=>(
+
+<>{
+
+ <div className='divfilenew  ' style={{marginBottom:10,background:'white'}} onClick={e=>openfiles(val)}>
+
+<div className="subfilenew">
+
+<img src={g2} alt="" />
+<h1>Payroll - {val.date}  </h1>
 </div>
+<span>
+Updated by: {val.by&&val.by} on {val.createdon&&val.createdon}  
+</span>
+</div>
+}   </>
+))
+
+}
+</div>
+</>
+}
+
+
+</>
 :
 <div
 style={{
@@ -2655,6 +2719,7 @@ flexDirection:'column',
     marginLeft:'1%'
 }}>
     <h4 className='headering'>
+    <BiArrowBack style={{marginRight:20}} onClick={e=>setshowfiles(false)} /> 
         Payroll - {currdata.date&&currdata.date}
     </h4>
     <button  className='actionbtp styleaction' onClick={e => showlistview?setshowlistview(false):setshowlistview(true)}>Actions

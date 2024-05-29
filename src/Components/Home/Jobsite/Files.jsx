@@ -56,8 +56,19 @@ const [companies, setcompanies] = useState([])
 
 const mapContainer = useRef(null);
 mapboxgl.accessToken = 'pk.eyJ1IjoidXNhbWE3ODZhIiwiYSI6ImNsZXZwbDV5ZTF0M3Ezc3Axdmhmb2Z3bmwifQ.b3u24ezWs8--UJphBNY1rA'
+const [showpayrollbutton, setshowpayrollbutton] = useState(false)
 
 function importthis(val) {
+    var fileso=files.filter(val2=>val2.weekno===selectedweek)
+
+
+    if(val._id===fileso[0]._id){
+        setshowpayrollbutton(true)
+    }
+    else{
+        setshowpayrollbutton(false)
+    }
+    console.log(fileso)
     console.log(val)
     setinvoiced(val)
     
@@ -185,7 +196,7 @@ function savepayroll(){
         companyid:selected,
         status:'Pending',
         by:datax.name,
-        createdon:new Date().toLocaleDateString('en-US'),
+        createdon:new Date().toLocaleDateString('en-US') +"  "+ new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
         date:invoiced.weekno,
 
     }
@@ -1397,6 +1408,7 @@ const [invoiced, setinvoiced] = useState(null)
 
 function exports2() {
 
+   
     var tx = []
     var alltotal = 0
     settxp([])
@@ -2171,7 +2183,7 @@ setweekends(distinctWeekNumbers)
 txp&&txp.length>0&&<div className={`${aduserl} nobg` }>
 <div className="mainpage1" >
   <ReactToPrint
-
+  onBeforeGetContent={e=>showdepartments(false)}
       trigger={() => <button className='exportbtn'>Export To pdf!</button>}
       content={() => componentRef.current}
   />
@@ -2201,8 +2213,8 @@ departments.map((val)=>(
 </div>
 }
       </button>
-      <button className='exportbtn4' onClick={e => savepayroll()}>Send to Payroll</button>
- 
+    {showpayrollbutton&&  <button className='exportbtn4' onClick={e => savepayroll()}>Send to Payroll</button>
+ }
   <div className="mainpage" ref={componentRef}>
 
 
