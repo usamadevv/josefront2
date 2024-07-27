@@ -103,10 +103,10 @@ function importthisx(val,val2){
         distance:0,
         nc_4:'-',
         net:0,
-onperdiem: 0,
-onperdiemel: "Yes",
+onperdiem: customperdiem,
+onperdiemel: "No",
 
-perdiem: 0,
+perdiem: customperdiem,
 
 perdiemel: "Yes",
 
@@ -837,7 +837,7 @@ console.log(rees)
                         setmkup(val.markup)
                         setincname(val.clientname)
                         setperdiemamnt1(Number(val.perdiemamnt))
-                        setonperdiemamnt1(Number(val.onperdiemamnt))
+                        setperdiemamnt1(Number(val.perdiemamnt))
 
 
                         val.user.length > 0 && val.user.forEach((element, indx) => {
@@ -876,7 +876,7 @@ console.log(rees)
                                 // perdiem: applyperdiemx ? (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.perdiem)||0 : 0,
                                 //onperdiem: applyperdiemx ? (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.onperdiem)||0 : 0,
                                 perdiem:applyperdiemx ?val.perdiemamnt:0, 
-                                onperdiem:applyperdiemx ?val.onperdiemamnt:0,
+                                onperdiem:applyperdiemx ?val.perdiemamnt:0,
 
 
                                 Ot_Hrs: (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0,
@@ -944,7 +944,7 @@ console.log(rees)
                         setmkup(val.markup)
                         setincname(val.clientname)
                         setperdiemamnt1(Number(val.perdiemamnt))
-                        setonperdiemamnt1(Number(val.onperdiemamnt))
+                        setperdiemamnt1(Number(val.perdiemamnt))
 
 
                         val.user.length > 0 && val.user.forEach((element, indx) => {
@@ -979,7 +979,7 @@ console.log(rees)
                              onperdiemel:'No',
                              
                              perdiem:applyperdiemx ?val.perdiemamnt:0, 
-                                onperdiem:applyperdiemx ?val.onperdiemamnt:0,
+                                onperdiem:applyperdiemx ?val.perdiemamnt:0,
 
 
                                 Ot_Hrs: (allhours.find(obj => obj.userid === element.userid&& obj.siteid === val._id)?.Ot_Hrs)||0,
@@ -1119,7 +1119,7 @@ console.log(rees)
                         setmkup(val.markup)
                         setincname(val.clientname)
                         setperdiemamnt1(Number(val.perdiemamnt))
-                        setonperdiemamnt1(Number(val.onperdiemamnt))
+                        setperdiemamnt1(Number(val.perdiemamnt))
 
 
                         val.user.length > 0 && val.user.forEach((element,inex) => {
@@ -1155,7 +1155,7 @@ console.log(rees)
                                perdiemel:'No',
                                onperdiemel:'No',
                                
-                               perdiem:val.perdiemamnt,   onperdiem:val.onperdiemamnt,
+                               perdiem:val.perdiemamnt,   onperdiem:val.perdiemamnt,
 
                                 Ot_Hrs: 0,
                                 OT_Pay_rate: Number(user.otpayrate) + Number(user.otpayrate) * Number(val.markup) / 100,
@@ -1228,7 +1228,7 @@ console.log(rees)
 
 
                         setperdiemamnt1(Number(val.perdiemamnt))
-                        setonperdiemamnt1(Number(val.onperdiemamnt))
+                        setperdiemamnt1(Number(val.perdiemamnt))
 
 
                         setinname(val.sitename)
@@ -1256,7 +1256,7 @@ console.log(rees)
                                 siteid:val._id,
                                 perdiemmiles:Number(val.perdiemmiles?val.perdiemmiles:0),
                                 onperdiemmiles:Number(val.onperdiemmiles?val.onperdiemmiles:0),
-                                perdiem:val.perdiemamnt,   onperdiem:val.onperdiemamnt,
+                                perdiem:val.perdiemamnt,   onperdiem:val.perdiemamnt,
                                 Payrate: valx === 1 ? parseInt(user.payrate) : parseInt(user.payrate),
                                 Ot_Hrs: 0,
                                 OT_Pay_rate: parseInt(user.otpayrate),
@@ -1386,12 +1386,15 @@ console.log(rees)
         preparedata.forEach((val, index) => {
 
 
+      
             var tr = parseFloat(val.Payrate)
 
             var to = parseFloat(val.OT_Pay_rate)
+if(val.Hrs>0){
 
-            alltotal = alltotal + parseFloat(tr * val.Hrs + to * val.Ot_Hrs + Number(val.perdiem)*val.days+ Number(val.onperdiem)*val.days)
-            settotalall(alltotal)
+    alltotal = alltotal + parseFloat(tr * val.Hrs + to * val.Ot_Hrs + Number(val.perdiem)*val.days+ Number(val.onperdiem))
+    settotalall(alltotal)
+}
             tx.push({
                 ["NAME"]: val.Employee,
                 ["REG HRS"]: val.Hrs,
@@ -1399,13 +1402,13 @@ console.log(rees)
                 ["REG RTE"]: Number(tr).toFixed(2).toLocaleString('en'),
                 ["OT HRS"]: val.Ot_Hrs,
                 ["OT RTE"]: Number(to).toFixed(2).toLocaleString('en'),
-                ["TOTAL"]: Number(tr * val.Hrs + to * val.Ot_Hrs + Number(val.perdiem)*val.days+ Number(val.onperdiem)*val.days).toFixed(2).toLocaleString('en'),
+                ["TOTAL"]: Number(tr * val.Hrs + to * val.Ot_Hrs + Number(val.perdiem)*val.days+ Number(val.onperdiem)).toFixed(2).toLocaleString('en'),
                 ["SKILL"]: val.skill,
                 ["site"]: ((found) => found ? found.sitename : 'Project not found')(data.find(project => project._id === val.siteid)), // Output: "Project 2" or "Project not found"
                 
-                ["P.D"]: Number(val.perdiem)  + Number(val.onperdiem) ,
+                ["P.D"]: Number(val.perdiem)  ,
 
-                ["days"]: val.days,
+                ["days"]: Number(val.days)+(val.onperdiemel==='Yes'?1:0),
 
 
 
@@ -1711,6 +1714,7 @@ console.log(rees)
 
             }
 
+        
 
         });
 
@@ -1818,6 +1822,20 @@ var postData={
           
         getAactiveSiteusers().then(res => {
             console.log(res)
+            res.Siteuserd.sort((a, b) => {
+                // Convert names to lowercase for case-insensitive sorting
+                const nameA = a.name.toLowerCase();
+                const nameB = b.name.toLowerCase();
+              
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                  return 1;
+                }
+                return 0;
+              });
+              
             setempdata(res.Siteuserd)
         })
 
@@ -1941,7 +1959,7 @@ var postData={
                 no: pno,
                 address: address,
                 perdiemamnt: perdiemamnt,
-                onperdiemamnt: onperdiemamnt,
+                perdiemamnt: perdiemamnt,
                 latlang: latlang
             }
 
@@ -2274,6 +2292,7 @@ setl(1)
     const [inno, setinno] = useState('')
     const [inname, setinname] = useState('')
     const [innum, setinnum] = useState('')
+    const [customperdiem, setcustomperdiem] = useState(0)
     const [inadd, setinadd] = useState('')
     const [mapx, setmapx] = useState('mapx')
     const [cfm, setcfm] = useState(true)
@@ -2412,6 +2431,27 @@ setl(1)
 
 
     }
+    function updateonel(val){
+        if(val==='enableit'){
+            settempjson(tempjson => ({
+                ...tempjson,
+                
+                
+                onperdiemel: 'Yes'
+                
+                }))
+        }
+        else{
+            settempjson(tempjson => ({
+                ...tempjson,
+                
+                
+                onperdiemel: 'No'
+                
+                }))
+        }
+     
+      }
     const [applyperdiemx, setapplyperdiemx] = useState(false)
     function appt(){
      
@@ -2440,7 +2480,7 @@ setl(1)
             users:extractedData,
             weekend:inend
          }
-      
+  
         getSiteUserDistance(postData).then(rees=>{
             console.log(rees)
             const updatedArray = preparedata.map((obj, index) => {
@@ -2448,6 +2488,26 @@ setl(1)
                 const foundUser = rees.find(user => user.userid === obj.userid);
 const elday=foundUser.dailymiles.some(val=>val>=obj.perdiemmiles)
 const elon=foundUser.dailymiles.some(val=>val>=obj.onperdiemmiles)
+if (index === preparedata.length - 1) {
+    
+    setapplyperdiemx(true)
+}
+
+    var updobj = {
+        ...obj,
+        perdiemel:'Yes',
+        onperdiemel:'No',
+        perdiem: Number(obj.perdiem),
+        onperdiem:  Number(obj.onperdiem),
+        days:obj.days,
+        distance:foundUser.miles
+    }
+    updobj.total = Number(updobj.total) 
+    updobj.net = Number(updobj.net) + Number(obj.onperdiem) * obj.days + 0
+    return updobj
+/*
+
+
                 if (index === preparedata.length - 1) {
     
                     setapplyperdiemx(true)
@@ -2512,12 +2572,15 @@ const elon=foundUser.dailymiles.some(val=>val>=obj.onperdiemmiles)
                     updobj.net = Number(updobj.net) + 0 + 0
                     return updobj
                 }
+**/
+
+
             });
     
             setpreparedata(updatedArray);
             console.log(updatedArray)
             console.log(perdiemamnt1)
-            console.log(onperdiemamnt1)
+            console.log(perdiemamnt1)
     
             setadduser2('adduser2')
             console.log(preparedata)
@@ -2579,7 +2642,7 @@ const elon=foundUser.dailymiles.some(val=>val>=obj.onperdiemmiles)
         setpreparedata(updatedArray);
         console.log(updatedArray)
         console.log(perdiemamnt1)
-        console.log(onperdiemamnt1)
+        console.log(perdiemamnt1)
 
         setadduser2('adduser2')
         console.log(preparedata)
@@ -2656,7 +2719,7 @@ const elon=foundUser.dailymiles.some(val=>val>=obj.onperdiemmiles)
                         setmkup(val.markup)
                         setincname(val.clientname)
                         setperdiemamnt1(Number(val.perdiemamnt))
-                        setonperdiemamnt1(Number(val.onperdiemamnt))
+                        setperdiemamnt1(Number(val.perdiemamnt))
 
 
                         val.user.length > 0 && val.user.forEach((element,inex) => {
@@ -2669,6 +2732,7 @@ const elon=foundUser.dailymiles.some(val=>val>=obj.onperdiemmiles)
                                 console.log(users)
 var indx=users.length>0?users.findIndex(vl=>vl.userid===element.userid):-1
 console.log(indx)
+
  
 if(indx!==-1&&!(pdata.some(vl=>vl.userid===users[indx].userid))){
     console.log(users[indx])
@@ -2719,7 +2783,7 @@ var oprt=Number(Number(element.otpayrate) + Number(element.otpayrate) * Number(v
        onperdiemel:'No',
        
        perdiem:val.perdiemamnt, 
-    onperdiem:val.onperdiemamnt,
+    onperdiem:val.perdiemamnt,
 
         Ot_Hrs: ohrs,
         OT_Pay_rate: oprt,
@@ -2757,7 +2821,7 @@ var oprt=Number(Number(element.otpayrate) + Number(element.otpayrate) * Number(v
        onperdiemel:'No',
        
        perdiem:val.perdiemamnt, 
-    onperdiem:val.onperdiemamnt,
+    onperdiem:val.perdiemamnt,
 
         Ot_Hrs: hrs,
         OT_Pay_rate: Number(element.otpayrate) + Number(element.otpayrate) * Number(val.markup) / 100,
@@ -2835,7 +2899,7 @@ var ohrs=hrs>40?hrs-40:0
                    onperdiemel:'No',
                    
                    perdiem:pro.perdiemamnt, 
-                onperdiem:pro.onperdiemamnt,
+                onperdiem:pro.perdiemamnt,
             
                     Ot_Hrs: ohrs,
                     OT_Pay_rate: oprt,
@@ -2863,13 +2927,11 @@ var ohrs=hrs>40?hrs-40:0
     const [perdiemamnt, setperdiemamnt] = useState(0)
     const [perdiemmil, setperdiemmil] = useState(0)
 
-    const [onperdiemamnt, setonperdiemamnt] = useState(34)
     const [onperdiemmil, setonperdiemmil] = useState(0)
 
     const [perdiemamnt1, setperdiemamnt1] = useState(34)
     const [perdiemmil1, setperdiemmil1] = useState(0)
 
-    const [onperdiemamnt1, setonperdiemamnt1] = useState(0)
     const [onperdiemmil1, setonperdiemmil1] = useState(0)
     const [aduserl, setaduserl] = useState('adduser2')
     function opm() {
@@ -3423,7 +3485,7 @@ currency: 'USD',
 
                  <div className="inpex inpexs">
                      <h1>Overnight Perdiem ($)</h1>
-                     <input type="number" onChange={e => setonperdiemamnt1(e.target.value)} value={onperdiemamnt1} />
+                     <input type="number" onChange={e => setperdiemamnt1(e.target.value)} value={perdiemamnt1} />
                  </div>
                  <div className="inpex inpexs">
                      <h1>Minimum Distance (Mi)</h1>
@@ -3704,7 +3766,7 @@ currency: 'USD',
 
                                              <div className="inpex inpexs">
                                                  <h1>Overnight Perdiem ($)</h1>
-                                                 <input type="number" onChange={e => setonperdiemamnt(e.target.value)} value={onperdiemamnt} />
+                                                 <input type="number" onChange={e => setperdiemamnt(e.target.value)} value={perdiemamnt} />
                                              </div>
                                              <div className="inpex inpexs">
                                                  <h1>Minimum Distance (Mi)</h1>
@@ -4339,7 +4401,15 @@ val.clientid===currjobid&&
 }
 
                              </div>
+                             <div className="inputname roundbord">
+                                 <h1>Perdiem (USD):</h1>
+                                 <input type="text" onChange={e=>setcustomperdiem(e.target.value)} value={customperdiem} />
+
+
+                             </div>
                          <div className="w100 w1002">
+                      
+
                          <button className='btn1' onClick={e=>backtop()}>Generate</button>
 
                          </div>
@@ -4604,30 +4674,36 @@ perdiem: e.target.value
 }))} />
  :
  <>
-<button className={`${val.perdiemel==='No'?'bgredbtn':'bggnbtn'}`}>
-
-
-$ {parseFloat(val.perdiem).toFixed(2)} 
-</button> 
- </>
- } </h4>
-<h4 style={{ width: '80px', marginBottom: '0px' }}>  {tempjson.siteid==='193039'?
-<input className='hrsedit' type="text" value={tempjson.onperdiem}  onChange={e => settempjson(tempjson => ({
+<input className='hrsedit' type="text" value={tempjson.perdiem}  onChange={e => settempjson(tempjson => ({
 ...tempjson,
 
 
-onperdiem: e.target.value
+perdiem: e.target.value
 
 }))} />
- :
- <>
- <button className={`${val.onperdiemel==='No'?'bgredbtn':'bggnbtn'}`}>
-
-
- $ {parseFloat(val.onperdiem).toFixed(2)} 
- </button>
  </>
- }</h4>
+ } </h4>
+<h4 style={{ width: '80px', marginBottom: '0px' }}>  
+
+{tempjson.onperdiemel==='Yes'?
+<div className='taxes' onClick={e => updateonel('disableit')}>
+<div className='circle'>
+
+</div>
+</div>
+    :
+    <div className='taxes2' onClick={e => updateonel('enableit')}>
+    <div className='circle2'>
+    
+    </div>
+    </div>
+
+}
+
+
+
+
+ </h4>
 
 <h4 style={{ width: '80px', marginBottom: '0px' }}>    <input className='hrsedit' type="text" value={tempjson.days}  onChange={e => settempjson(tempjson => ({
                                                          ...tempjson,
@@ -4808,35 +4884,36 @@ perdiem: e.target.value
  <>
 
 
- <button className={`${val.perdiemel==='No'?'bgredbtn':'bggnbtn'}`}>
+<input className='hrsedit' type="text" value={tempjson.perdiem}  onChange={e => settempjson(tempjson => ({
+...tempjson,
 
 
-$ {parseFloat(val.perdiem).toFixed(2)} 
-</button> 
- 
+perdiem: e.target.value
+
+}))} />
  </>
  }
 
  
 
  </h4>
-<h4 style={{ width: '80px', marginBottom: '0px' }}>   {tempjson.siteid==='193039'?
-<input className='hrsedit' type="text" value={tempjson.onperdiem}  onChange={e => settempjson(tempjson => ({
-...tempjson,
+<h4 style={{ width: '80px', marginBottom: '0px' }}> 
+{tempjson.onperdiemel==='Yes'?
+<div className='taxes2' onClick={e => updateonel('disableit')}>
+<div className='circle2'>
 
+</div>
+</div>
+    :
+    <div className='taxes' onClick={e => updateonel('enableit')}>
+    <div className='circle'>
+    
+    </div>
+    </div>
 
-onperdiem: e.target.value
+}
 
-}))} />
- :
- <>
-<button className={`${val.onperdiemel==='No'?'bgredbtn':'bggnbtn'}`}>
-
-
-$ {parseFloat(val.onperdiem).toFixed(2)} 
-</button> 
- </>
- } </h4>
+   </h4>
 
 <h4 style={{ width: '80px', marginBottom: '0px' }}>    <input className='hrsedit' type="text" value={tempjson.days}  onChange={e => settempjson(tempjson => ({
                                                          ...tempjson,

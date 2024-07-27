@@ -55,7 +55,7 @@ else{
     function login(e) {
         e.preventDefault()
         var postData={
-          email:email,
+          email:email.toLowerCase(),
           pass:pass
       }
        loginAdmin(postData).then((res)=>{
